@@ -8,17 +8,17 @@ using System.Web;
 using System.Web.Mvc;
 using bwarrickShoppingApp.Models;
 using bwarrickShoppingApp.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
 
 namespace bwarrickShoppingApp.Controllers
 {
-    public class OrderItemsController : Controller
+    public class OrderItemsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: OrderItems
         public ActionResult Index()
         {
-            return View(db.OtderItems.ToList());
+            return View(db.OrderItems.ToList());
         }
 
         // GET: OrderItems/Details/5
@@ -28,7 +28,7 @@ namespace bwarrickShoppingApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrderItem orderItem = db.OtderItems.Find(id);
+            OrderItem orderItem = db.OrderItems.Find(id);
             if (orderItem == null)
             {
                 return HttpNotFound();
@@ -49,9 +49,11 @@ namespace bwarrickShoppingApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,OrderId,ItemId,Quantity,UnitPrice")] OrderItem orderItem)
         {
+           
             if (ModelState.IsValid)
             {
-                db.OtderItems.Add(orderItem);
+               
+                db.OrderItems.Add(orderItem);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +68,7 @@ namespace bwarrickShoppingApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrderItem orderItem = db.OtderItems.Find(id);
+            OrderItem orderItem = db.OrderItems.Find(id);
             if (orderItem == null)
             {
                 return HttpNotFound();
@@ -97,7 +99,7 @@ namespace bwarrickShoppingApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrderItem orderItem = db.OtderItems.Find(id);
+            OrderItem orderItem = db.OrderItems.Find(id);
             if (orderItem == null)
             {
                 return HttpNotFound();
@@ -110,8 +112,8 @@ namespace bwarrickShoppingApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            OrderItem orderItem = db.OtderItems.Find(id);
-            db.OtderItems.Remove(orderItem);
+            OrderItem orderItem = db.OrderItems.Find(id);
+            db.OrderItems.Remove(orderItem);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

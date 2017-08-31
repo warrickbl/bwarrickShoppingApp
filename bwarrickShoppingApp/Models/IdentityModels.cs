@@ -14,7 +14,6 @@ namespace bwarrickShoppingApp.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
         public string FullName
         {
             get
@@ -54,6 +53,7 @@ namespace bwarrickShoppingApp.Models
         public DbSet <Item> Items { get; set; }
         public DbSet <CartItem> CartItems { get; set; }
         public DbSet <Order> Orders { get; set; }
-        public DbSet <OrderItem> OtderItems { get; set; }
+        public DbSet <OrderItem> OrderItems { get; set; }
+
     }
 }

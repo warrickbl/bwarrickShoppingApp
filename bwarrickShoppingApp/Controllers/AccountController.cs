@@ -13,7 +13,7 @@ using bwarrickShoppingApp.Models;
 namespace bwarrickShoppingApp.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : Universal
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -83,7 +83,7 @@ namespace bwarrickShoppingApp.Controllers
                     {
                         return RedirectToLocal(returnUrl);
                     }
-                    return RedirectToAction("Index", "Items");
+                    return RedirectToAction("Index", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

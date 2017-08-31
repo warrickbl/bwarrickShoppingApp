@@ -8,18 +8,27 @@ using System.Web;
 using System.Web.Mvc;
 using bwarrickShoppingApp.Models;
 using bwarrickShoppingApp.Models.CodeFirst;
+using System.IO;
 
 namespace bwarrickShoppingApp.Controllers
 {
   
-    public class ItemsController : Controller
-    {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
+    public class ItemsController : Universal
+    { 
         // GET: Items
-        public ActionResult Index()
+        public ActionResult Index(string type)
+            
         {
-            return View(db.Items.ToList());
+            var itemTypeList = db.Items.Where(i => i.Type == type).ToList();
+            var nonTypeList = db.Items.ToList();
+            if (type == null)
+            {
+                return View(nonTypeList);
+            }
+            else
+            { 
+            return View(itemTypeList);
+            }
         }
 
         // GET: Items/Details/5
@@ -50,13 +59,24 @@ namespace bwarrickShoppingApp.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description")] Item item)
+        public ActionResult Create([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description,Type")] Item item, HttpPostedFileBase image)
         {
+            if(image != null && image.ContentLength > 0)
+            {
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                    ModelState.AddModelError("image", "Invalid Format");
+            }
             if (ModelState.IsValid)
             {
+                var filePath = "/Assets/Images/";
+                var absPath = Server.MapPath("~" + filePath);
+                item.MediaURL = filePath + image.FileName;
+                image.SaveAs(Path.Combine(absPath, image.FileName));
+                item.CreationDate = System.DateTime.Now;
                 db.Items.Add(item);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(item);
@@ -84,11 +104,29 @@ namespace bwarrickShoppingApp.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description")] Item item)
+        public ActionResult Edit([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description")] Item item, string MediaURL, HttpPostedFileBase image)
         {
+            if (image != null && image.ContentLength > 0)
+            {
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                    ModelState.AddModelError("image", "Invalid Format");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(item).State = EntityState.Modified;
+                if (image != null)
+                {
+                    var filePath = "/Assets/Images/";
+                    var absPath = Server.MapPath("~" + filePath);
+                    item.MediaURL = filePath + image.FileName;
+                    image.SaveAs(Path.Combine(absPath, image.FileName));        
+                }
+                else
+                {
+                    item.MediaURL = MediaURL;
+                }
+                item.UpdatedDate = System.DateTime.Now;            
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -118,6 +156,8 @@ namespace bwarrickShoppingApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Item item = db.Items.Find(id);
+            var absPath = Server.MapPath("~" + item.MediaURL);
+            System.IO.File.Delete(absPath);
             db.Items.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -8,17 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using bwarrickShoppingApp.Models;
 using bwarrickShoppingApp.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
 
 namespace bwarrickShoppingApp.Controllers
 {
-    public class CartItemsController : Controller
-    {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
+    public class CartItemsController : Universal
+
+    {
         // GET: CartItems
+        [Authorize]
         public ActionResult Index()
         {
-            return View(db.CartItems.ToList());
+            var user = db.Users.Find(User.Identity.GetUserId());
+            return View(user.CartItems.ToList());
         }
 
         // GET: CartItems/Details/5
@@ -37,7 +40,7 @@ namespace bwarrickShoppingApp.Controllers
         }
 
         // GET: CartItems/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
             return View();
         }
@@ -47,37 +50,55 @@ namespace bwarrickShoppingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemId,CustomerId,Count,CreationDate")] CartItem cartItem)
+        public ActionResult Create(int? itemId)
         {
-            if (ModelState.IsValid)
+            var user = db.Users.Find(User.Identity.GetUserId());
+            
+            if (itemId != null)
             {
-                db.CartItems.Add(cartItem);
-                db.SaveChanges();
+                if (db.CartItems.Where(i => i.CustomerId == user.Id).Any(i => i.ItemId == itemId.Value))
+                {
+                    var existingCartItem = db.CartItems.Where(i => i.CustomerId == user.Id).FirstOrDefault(i => i.ItemId == itemId.Value);
+                    existingCartItem.Count++;
+                    db.SaveChanges();
+                }
+      
+                else
+                {
+                    
+                    CartItem cartItem = new CartItem();
+                    cartItem.ItemId = (int)itemId;
+                    cartItem.CustomerId = user.Id;
+                    cartItem.Count = 1;
+                    cartItem.CreationDate = DateTime.Now;
+                    db.CartItems.Add(cartItem);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Index");
             }
-
-            return View(cartItem);
+            return View();
         }
-
-        // GET: CartItems/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
+            // GET: CartItems/Edit/5
+            public ActionResult Edit(int? id)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CartItem cartItem = db.CartItems.Find(id);
+                if (cartItem == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cartItem);
             }
-            CartItem cartItem = db.CartItems.Find(id);
-            if (cartItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cartItem);
-        }
+        
 
-        // POST: CartItems/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+            // POST: CartItems/Edit/5
+            // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+            // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost] 
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,ItemId,CustomerId,Count,CreationDate")] CartItem cartItem)
         {

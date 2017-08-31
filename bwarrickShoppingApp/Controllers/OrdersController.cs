@@ -8,18 +8,44 @@ using System.Web;
 using System.Web.Mvc;
 using bwarrickShoppingApp.Models;
 using bwarrickShoppingApp.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
 
 namespace bwarrickShoppingApp.Controllers
 {
-    public class OrdersController : Controller
+    public class OrdersController : Universal
+   
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        public ActionResult Confirmation(bool Completed, int? id)
 
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            Order order = db.Orders.Find(id);
+            if (order != null)
+            {
+                order.Completed = true;
+                db.SaveChanges();  
+            }
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var cartItems = db.CartItems.Where(c => c.CustomerId == user.Id).ToList();
+            foreach (var item in cartItems)
+            {
+                db.CartItems.Remove(item);
+            }
+            db.SaveChanges();
+            return View();
+        }
         // GET: Orders
         public ActionResult Index()
+           
         {
-            return View(db.Orders.ToList());
+            var user = db.Users.Find(User.Identity.GetUserId());
+            return View(user.Orders.ToList());
         }
+        
 
         // GET: Orders/Details/5
         public ActionResult Details(int? id)
@@ -49,13 +75,39 @@ namespace bwarrickShoppingApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Address,City,State,ZipCode,Country,Phone,Total,OrderDate,CustomerId")] Order order)
         {
-            if (ModelState.IsValid)
+            
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var cartItems = db.CartItems.Where(c => c.CustomerId == user.Id).ToList();
+                order.OrderItems = cartItems.Select(o => new OrderItem
             {
-                db.Orders.Add(order);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
+                ItemId = o.ItemId,
+                Quantity = o.Count,
+                UnitPrice = o.Item.Price,
+
+            }).ToList();
+
+                order.OrderDate = DateTime.Now;
+                order.CustomerId = user.Id;
+
+                foreach (var CartItem in cartItems)
+                {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.ItemId = CartItem.ItemId;
+                    orderItem.Quantity = CartItem.Count;
+                    orderItem.UnitPrice = CartItem.Item.Price;
+                }
+
+                order.Total = order.OrderItems.Sum(t => t.Quantity * t.UnitPrice);
+                if (ModelState.IsValid)
+                {
+                    order.OrderDate = DateTime.Now;
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                    return RedirectToAction("Details", new { id = order.Id });
+                }
+            
+            
             return View(order);
         }
 
@@ -83,10 +135,12 @@ namespace bwarrickShoppingApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                order.OrderDate = DateTime.Now;
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(order);
         }
 

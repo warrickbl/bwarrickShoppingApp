@@ -16,12 +16,6 @@ namespace bwarrickShoppingApp.Models.CodeFirst
         public virtual Item Item { get; set; }
         public virtual ApplicationUser Customer {get; set;}
 
-        public decimal unitTotal
-        {
-            get
-            {
-                return Count * Item.Price;
-            }
-        }
+        
     }
 }

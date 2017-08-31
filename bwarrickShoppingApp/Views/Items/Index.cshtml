@@ -1,19 +1,32 @@
 ﻿    @model IEnumerable<bwarrickShoppingApp.Models.CodeFirst.Item>
+@{ 
+    ViewBag.Title = "Index";
+}
 
         <div class="container">
-            <div class="row" style="padding-top:50px; margin-left:20px;">
-                @foreach(var item in Model)
+            <div class="row" style="padding-top:50px;">
+                @foreach (var item in Model)
                 {
                 <div class="col-md-3">
-                    <img class="img-responsive" src="@item.MediaURL" />
-                    <p>@item.Name</p>
-                    <p><b>$@item.Price</b></p>
-                    <p>@item.Description</p>
-                        <a href="@Url.Action("Details", new { id = item.Id })"> Details</a>
-                       
+                    <img class="img-responsive" style="height:250px; width:300px" src="@Url.Content(item.MediaURL)" />
+                   
+                    <p style="color:steelblue; text-align:center; font-size:20px;font-family: 'Zilla Slab', 'cursive'">
+                    <b>@item.Name</b> | $@item.Price</p>
+                    <p style="align-content:center; text-align:center; font-size:16px; font-family: 'Zilla Slab'">
+
+                    <a href="@Url.Action("Details", new { id = item.Id })"> Details</a> 
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("Create", "CartItems", new { itemId = item.Id }, FormMethod.Post, null))
+                            {
+                            @Html.AntiForgeryToken()
+                                <p style="align-content:center; text-align:center"><input type="submit" class="btn btn-default" value="Add to Cart" style="background-color:white;
+                             border-style:none;font-family: 'Zilla Slab', 'cursive'; color:steelblue;font-size:16px;" /></p>
+                            }
+                        }
+           
                     @if (User.IsInRole("Admin"))
                     {
-                        <span>|</span>
                         @Html.ActionLink("Create new ", "Create", new { id = item.Id }) 
                         <span>|</span>
                         @Html.ActionLink("Edit ", "Edit", new { id = item.Id}) 
@@ -22,43 +35,43 @@
                     }
                 </div>
                 }
-                @*<div class="col-md-3">
-                    <img class="img-responsive" src="~/Assets/Images/m2.jpg" />
-                    <p>CFW-1100</p>
-                    <p><b>$1600.00</b></p>
-                </div>
-                <div class="col-md-3">
-                    <img class="img-responsive" src="~/Assets/Images/m3.jpg" />
-                    <p>CFW-850</p>
-                    <p><b>$1550.00</b></p>
-                </div>
-                <div class="col-md-3">
-                    <img class="img-responsive" src="~/Assets/Images/m5.jpg" />
-                    <p>CFW-2500</p>
-                    <p><b>$2000.00</b></p>
-                </div>*@
+                  @*<div class="col-md-3">
+         <img class="img-responsive" src="~/Assets/Images/Mug5.jpg" />
+         <p>CFW-1100</p>
+         <p><b>$1600.00</b></p>
+         </div>
+         <div class="col-md-3">
+         <img class="img-responsive" src="~/Assets/Images/Mug17.jpg" />
+        <p>CFW-850</p>
+         <p><b>$1550.00</b></p>
+         </div>
+         <div class="col-md-3">
+        <img class="img-responsive" src="~/Assets/Images/Mug18.jpg" />
+          <p>CFW-2500</p>
+        <p><b>$2000.00</b></p>
+        </div>*@
             </div>
-            @*<div class="row" style="padding-top:50px; padding-bottom:10px; margin-left:20px;">
-                <div class="col-md-3">
-                    <img class="img-responsive" src="~/Assets/Images/m6.jpg" />
-                    <p>CFAW-1300</p>
-                    <p><b>$2300.00</b></p>
+                            @*<div class="row" style="padding-top:50px; padding-bottom:10px; margin-left:20px;">
+                 <div class="col-md-3">
+                 <img class="img-responsive" src="~/Assets/Images/Mug8.jpg" />
+                <p>CFAW-1300</p>
+                  <p><b>$2300.00</b></p>
+                  </div>
+                  <div class="col-md-3">
+                  <img class = "img-responsive" src="~/Assets/Images/Mug1.jpg" />
+                 <p>CFAW-5000</p>
+                   <p><b>$3500.00</b></p>
+                  </div>
+                    <div class="col-md-3">
+                    <img class="img-responsive" src="~/Assets/Images/Mug14.jpg" />
+                   <p>CFAW-2500</p>
+                <p><b>$2800.00</b></p>
                 </div>
                 <div class="col-md-3">
-                    <img class="img-responsive" src="~/Assets/Images/m7.jpg" />
-                    <p>CFAW-5000</p>
-                    <p><b>$3500.00</b></p>
-                </div>
-                <div class="col-md-3">
-                    <img class="img-responsive" src="~/Assets/Images/m8.jpg" />
-                    <p>CFAW-2500</p>
-                    <p><b>$2800.00</b></p>
-                </div>
-                <div class="col-md-3">
-                    <img class="img-responsive" src="~/Assets/Images/m9.jpg" />
-                    <p>CFAW-1050</p>
-                    <p><b>$1500.00</b></p>
-                </div>
-            </div>*@
-        </div>
+                 <img class="img-responsive" src="~/Assets/Images/Mug19.jpg" />
+                <p>CFAW-1050</p>
+                 <p><b>$1500.00</b></p>
+                 </div>
+                 </div>*@
+ </div>
        

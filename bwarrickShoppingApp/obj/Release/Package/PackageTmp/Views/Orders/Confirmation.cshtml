@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Your Order Confirmation</title>
+</head>
+<body>
+    <div style="margin-left:100px;font-family:'Zilla Slab'; color:steelblue; text-align:center"> 
+        <h1>Your Order Confirmation</h1>
+        <p>Thank you for your order! Your items will shipped within 5-7 business days.</p>
+        <button style="margin:20px; font-family:'Zilla Slab'; color:steelblue;">
+            @Html.ActionLink("View My Orders", "Index", "Orders")
+        </button>
+    </div>
+</body>
+</html>
