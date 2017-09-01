@@ -1,7 +1,21 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<div style="font-family:'Zilla Slab'; color:steelblue; margin-left:90px;">
+    <h2 style="text-align:center">Welcome to MugShop!</h2>
+    <h3>Handmade pottery out of North Carolina...</h3>
 
-<p>Use this area to provide additional information.</p>
+    <p>Located in the heart of pottery country in Seagove, NC, MugShop offers
+    a wide variety of mugs, plates, bowls, and vases. <br />
+    We source from local artisans and will begin
+    featuring a spotlight artisan each month starting in 2018. <br />
+    MugShop is still fairly new! We opened our doors in July of 2017 and are excited to serve pottery 
+    lovers near and far! Our pottery is a great gift for friends, family, or yourself!  
+    </p>
+
+    <h3 style="text-align:center">Thank you for stopping in! Happy Shopping!</h3>
+
+    <p style="text-align:center">
+     <button style="background-color:lightblue; color:white; border-style:none;">@Html.ActionLink("Continue Shopping", "Index", "Home")</button>
+    </p>
+</div>

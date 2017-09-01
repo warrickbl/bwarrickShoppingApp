@@ -1,0 +1,120 @@
+﻿@model bwarrickShoppingApp.Models.CodeFirst.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+    </dl>
+        <table class="table" style="margin-left:90px; width:1100px;">
+            <tr>
+                <th>
+                    Item
+                </th>
+                <th>
+                    Count
+                </th>
+                <th>
+                    Price per Item
+                </th>
+            </tr>
+
+            @foreach (var orderItem in Model.OrderItems)
+            {
+                <tr>
+                    <td>
+                        <img class="img-responsive" style="height:200px; width:250px; position:center" src="@Url.Content(orderItem.Item.MediaURL)" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => orderItem.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => orderItem.Item.Price)
+                    </td>
+
+                </tr>
+            }
+        </table>
+  
+</div>
+
+
+<div style="margin-left:1100px; padding:20px;">
+    <p>
+        
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    @if (Model.Completed == false)
+    {
+    <button>@Html.ActionLink("Confirm Order", "Confirmation", "Orders", new { Completed = true, id = Model.Id }, null)</button> 
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, null)}
+</div>

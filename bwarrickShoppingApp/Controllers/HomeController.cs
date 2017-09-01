@@ -16,7 +16,6 @@ namespace bwarrickShoppingApp.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
 
             return View();
         }
@@ -32,6 +31,14 @@ namespace bwarrickShoppingApp.Controllers
             return View();
         }
         public ActionResult Message()
+        {
+            return View();
+        }
+        public ActionResult Hiring()
+        {
+            return View();
+        }
+        public ActionResult Classes()
         {
             return View();
         }

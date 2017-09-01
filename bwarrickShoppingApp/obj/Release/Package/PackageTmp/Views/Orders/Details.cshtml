@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 style="font-family:'Zilla Slab'; color:steelblue; margin-left:100px;">Order Details</h2>
 
-<div>
-    <h4>Order</h4>
+<div style="font-family:'Zilla Slab'; color:steelblue; ">
+
     <hr />
 
     <dl class="dl-horizontal">
@@ -75,46 +75,47 @@
             @Html.DisplayFor(model => model.OrderDate)
         </dd>
     </dl>
-        <table class="table" style="margin-left:90px; width:1100px;">
-            <tr>
-                <th>
-                    Item
-                </th>
-                <th>
-                    Count
-                </th>
-                <th>
-                    Price per Item
-                </th>
-            </tr>
+    <table class="table" style="margin-left:90px; width:1100px;">
+        <tr>
+            <th>
+                Item
+            </th>
+            <th>
+                Count
+            </th>
+            <th>
+                Price per Item
+            </th>
+        </tr>
 
-            @foreach (var orderItem in Model.OrderItems)
+        @foreach (var orderItem in Model.OrderItems)
             {
-                <tr>
-                    <td>
-                        <img class="img-responsive" style="height:200px; width:250px; position:center" src="@Url.Content(orderItem.Item.MediaURL)" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => orderItem.Quantity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => orderItem.Item.Price)
-                    </td>
+            <tr>
+                <td>
+                    <img class="img-responsive" style="height:200px; width:250px; position:center" src="@Url.Content(orderItem.Item.MediaURL)" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => orderItem.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => orderItem.Item.Price)
+                </td>
 
-                </tr>
-            }
-        </table>
-  
+            </tr>
+        }
+    </table>
+
 </div>
 
 
 <div style="margin-left:1100px; padding:20px;">
-    <p>
-        
-        @Html.ActionLink("Back to List", "Index")
+    <p style="font-family:'Zilla Slab'">
+        <button>
+            @Html.ActionLink("Back to List", "Index")
+        </button>
     </p>
     @if (Model.Completed == false)
     {
-    <button>@Html.ActionLink("Confirm Order", "Confirmation", "Orders", new { Completed = true, id = Model.Id }, null)</button> 
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, null)}
+        <button>@Html.ActionLink("Confirm Order", "Confirmation", "Orders", new { Completed = true, id = Model.Id }, null)</button>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, null)}
 </div>

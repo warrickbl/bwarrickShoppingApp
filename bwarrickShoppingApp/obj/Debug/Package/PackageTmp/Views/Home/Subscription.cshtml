@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Subscription Confirmation</title>
+</head>
+<body>
+    <div style="font-family:'Zilla Slab'; color:steelblue; text-align:center;"> 
+        <h2>Thank you for Subscribing with MugShop!</h2>
+        <h4>You will be receiving your first email from our Marketing Team shortly.</h4>
+        <h4>Be on the lookout for Special Offers and Happy Shopping!</h4>
+        <p><button>@Html.ActionLink("Continue Shopping", "Index", "Home")</button></p>
+    </div>
+</body>
+</html>

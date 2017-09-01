@@ -19,7 +19,7 @@ namespace bwarrickShoppingApp.Models
                 ViewBag.FirstName = user.FirstName;
                 ViewBag.LastName = user.LastName;
                 ViewBag.FullName = user.FullName;
-                
+                                
                
                 var myCart = db.CartItems.AsNoTracking().Where(c => c.CustomerId == user.Id).ToList();
                 ViewBag.TotalCartItems = myCart.Sum(c => c.Count);

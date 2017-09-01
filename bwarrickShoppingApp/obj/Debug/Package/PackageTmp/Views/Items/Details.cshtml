@@ -1,0 +1,61 @@
+﻿@model bwarrickShoppingApp.Models.CodeFirst.Item
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="container" style="margin-left:120px; margin-bottom:40px; margin-top:20px">
+    <div class="row">
+        <div class="col-md-6">
+            <img class="img-responsive" style="height:300px; width:350px; position:center" src="@Model.MediaURL" />
+        </div>
+        <div class="col-md-6">
+            <h2 style="font-family:'Zilla Slab'; color: steelblue">Details</h2>
+            <div>
+                <dl class="dl-vertical" style="font-family:'Zilla Slab'; color: steelblue">
+                    <dt>
+                        Item Name:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        Price:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Price)
+                    </dd>
+                    <dt>
+                        Description:
+                    </dt>
+
+                    <dd>
+                        @Html.Raw(Model.Description)
+                    </dd>
+
+                </dl>
+
+            </div>
+            <div>
+                <p>
+                    <button class="btn btn-default" style="background-color:white; border-style:none; font-family:'Zilla Slab';
+                color:steelblue; font-size:16px; text-decoration:none;">
+                        @Html.ActionLink("Back to List", "Index")
+            </button>
+
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("Create", "CartItems", new { itemId = Model.Id }, FormMethod.Post, null))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn btn-default" value="Add to Cart" style="background-color:white;
+                             border-style:none;font-family: 'Zilla Slab', 'cursive'; color:steelblue;font-size:16px;" />
+                }
+            }
+            </p>
+            </div>
+        </div>
+    </div>
+</div>

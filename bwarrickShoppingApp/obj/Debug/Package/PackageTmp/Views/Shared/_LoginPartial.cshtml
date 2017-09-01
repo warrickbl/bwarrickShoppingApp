@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Bad+Script|Courgette|Lobster|Poiret+One|Zilla+Slab" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
+
+    <ul class="nav navbar-nav navbar-right" style="position:relative; text-wrap:normal; margin-right:10px;">
+        <li style="font-family: 'Zilla Slab', 'cursive'; font-size:30px">
+            <a href="@Url.Action("Index", "Manage")" style="background:none;">Hello @ViewBag.FullName!</a>
+        </li>
+        @if (Request.IsAuthenticated)
+        {
+            <li>
+                
+                    <a href="@Url.Action("Index", "CartItems")">
+                        <div>
+                            <i class="fa fa-shopping-cart" style="font-size:20px;color:steelblue;"></i>@ViewBag.TotalCartItems
+                        </div>
+                    </a>
+               
+            </li>
+            <li>
+                <button style="border-style:none; background-color:lightblue; margin-top:10px;font-family:'Zilla Slab'; font-size:20px">
+                    <a href="@Url.Action("Index", "Orders")"> View Orders</a>
+                </button>       
+            </li>
+        }
+        @*<li>
+            <button style="border-style:none; background-color:lightblue; margin-top:16px">
+            <i class="fa fa-search" style="font-size:18px; color:steelblue;"></i></button>
+        </li>*@
+        <li>
+            <button style="border-style:none; background-color:lightblue; margin-top:10px;font-family: 'Zilla Slab'; font-size:20px">
+                <a href="javascript:document.getElementById('logoutForm').submit()" style="background:none;">Log Off</a>
+            </button>
+</li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right" style="position: relative; text-align:right; float:right;">
+        <li style="font-size:30px; font-family: 'Amatic SC', 'cursive'">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li style="font-size:30px; font-family: 'Amatic SC', 'cursive'">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

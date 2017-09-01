@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC|Bad+Script|Courgette|Lobster|Poiret+One|Zilla+Slab" rel="stylesheet">
+
+<div class="jumbotron" style="background-color:lavenderblush; color:steelblue; width:86.5%; align-content:center; margin-left:90px;">
+    <h1 style="font:45px/1.5 'Pacifico', Helvetica, sans-serif, italic; text-align:center;">Coffee Mugs are like Morning Ambulances...</h1>
+    <p class="lead" style="font:33px/1.5 'Pacifico', Helvetica, sans-serif, italic; text-align:center;">They are the vehicles that deliver the serum to bring you back to life in the morning.</p>
+</div>
+
+<div class="row" style="margin-left:80px; margin-right:35px; ">
+    <div class="col-md-4"style="align-content:center">
+        
+        <h2 style="font-family:'Zilla Slab'; font-size:30px; margin-left:110px;color:steelblue;">@Html.ActionLink("-Mugs-", "Index", "Items", new { type = "Mug" }, null)</h2>
+        <img class="img-responsive" src="~/Assets/Images/Mug21.jpg" style="height:85%; width:85%;"/>
+        <p></p>
+    </div>
+    <div class="col-md-4" style="align-content:center">
+        <h2 style="font-family:'Zilla Slab'; font-size:30px; margin-left:110px;color:steelblue;">@Html.ActionLink("-Vases-", "Index", "Items", new { type = "Vase" }, null)</h2>
+        <img class="img-responsive" src="~/Assets/Images/Vases.jpg" style="height:85%; width:85%;"/>
+        <p></p>       
+    </div>
+    <div class="col-md-4"style="align-content:center">
+        <h2 style="font-family:'Zilla Slab'; font-size:30px; margin-left:50px;color:steelblue;">@Html.ActionLink("-Plates & Bowls-", "Index", "Items", new { type = "PlateBowl" }, null)</h2>
+        <img class="img-responsive" src="~/Assets/Images/plates4.jpg" style="height:85%; width:85%;" />
+        <p></p>
+    </div>
+</div>

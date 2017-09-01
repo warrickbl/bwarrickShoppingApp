@@ -29,6 +29,11 @@ namespace bwarrickShoppingApp.Controllers
                 order.Completed = true;
                 db.SaveChanges();  
             }
+            //if (order != null)
+            //{
+            //    order.Completed = false;
+            //    db.Orders.Remove(order);
+            //}
             var user = db.Users.Find(User.Identity.GetUserId());
             var cartItems = db.CartItems.Where(c => c.CustomerId == user.Id).ToList();
             foreach (var item in cartItems)
@@ -73,11 +78,16 @@ namespace bwarrickShoppingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public ActionResult Create([Bind(Include = "Id,Address,City,State,ZipCode,Country,Phone,Total,OrderDate,CustomerId")] Order order)
         {
             
-                var user = db.Users.Find(User.Identity.GetUserId());
+            var user = db.Users.Find(User.Identity.GetUserId());
                 var cartItems = db.CartItems.Where(c => c.CustomerId == user.Id).ToList();
+            if (user.CartItems.Count == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
                 order.OrderItems = cartItems.Select(o => new OrderItem
             {
 
@@ -106,6 +116,7 @@ namespace bwarrickShoppingApp.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Details", new { id = order.Id });
                 }
+                
             
             
             return View(order);

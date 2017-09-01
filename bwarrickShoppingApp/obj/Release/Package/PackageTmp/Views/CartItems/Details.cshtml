@@ -11,19 +11,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ItemId)
+            Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ItemId)
+            @Html.DisplayFor(model => model.Item.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CustomerId)
+            Price
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CustomerId)
+            @Html.DisplayFor(model => model.Item.Price)
         </dd>
 
         <dt>
@@ -34,13 +34,6 @@
             @Html.DisplayFor(model => model.Count)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
 
     </dl>
 </div>

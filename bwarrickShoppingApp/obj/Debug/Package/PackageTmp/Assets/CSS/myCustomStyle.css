@@ -1,0 +1,119 @@
+﻿.nav {position:fixed;}
+.header {
+    width: 96.2%;
+    left: 1.9%; 
+    height: 100px;
+    top: 30px;
+    text-align:center;
+    position:relative;
+
+}
+.myCustomNavItem a { display:block; 
+                      color:steelblue; 
+                      font-size:22px;
+                      margin:20px; 
+                      text-decoration:none;}
+
+ .myCustomNavItem a:hover{ background-color:white;
+                           color:black;
+                           width:150px;
+                           height:40px;
+                           text-decoration:none;
+ }
+ .dropButton { background-color: white;
+                 color: steelblue;
+                 font-size: 18px;
+                 border-style: none;
+
+ }
+
+ .headingforMenu {font-size:24px;
+                  cursor:none;
+                  padding-top:50px;
+                  padding-bottom:50px;
+ }
+
+ .headingforMenu a{font-size:24px; 
+                   display:block; 
+                   text-decoration:none;
+                   color:steelblue;}
+ .headingforMenu a:hover{text-decoration:none;
+
+ }
+
+ .SubscribeBox {background-color:lightblue;
+                display:block;
+                font-family:Arial;
+                color:white;
+                padding-bottom:35px;
+                padding-top:10px;
+                padding:20px;
+ }
+
+ .SubscribeBox h1 {margin-left: 3px;
+                   margin-top:35px;
+                   font-family:Arial, Helvetica, sans-serif;}
+
+ .SubscribeBox p {margin-left:3px;}
+
+ .SubscribeBox input {margin-left:3px;
+                      width:100%;}
+
+ .SubscribeBox button {background-color:white;
+                       padding:8px;
+                       padding:12px;
+                       color:steelblue;
+                       border-style:none;
+                       margin-top:10px;
+                       margin-left:3px;
+                      
+ }
+
+ .SubscribeBox button:hover {background-color:white;
+                             color:steelblue;
+                             cursor:pointer;}
+.row { display:flex;
+      flex-wrap: wrap;
+}
+.ContactBox {display:block;
+             margin-top:45px;
+}
+.ContactBox input {width:300px;
+                   padding-left:8px;
+}
+.ContactBox button{width:300px;
+                   background-color:black;
+                   color:white;
+                   border-style:none;
+                   padding-top:3px;
+                   padding-bottom:3px;
+}
+.container {max-width:100%;}
+/*.PrimaryWatch{width:1100px;
+             
+}*/
+.AboutUs {margin-top:45px;
+          margin-bottom:45px;
+}
+.AboutUs a{color:steelblue;
+           cursor:pointer;
+           text-decoration:none;
+}
+.AboutUs a:hover{background-color:none;
+                 color:steelblue;
+}
+.AboutUs button{background-color:lightgray;
+                border-style:none;
+
+}
+.AboutUs button:hover{background-color:gray;}
+.StoreInfo {margin-top:45px;}
+.footer p {padding:20px;
+}
+.footer a{text-decoration:underline;
+}
+.footer a:hover{color:gray;}
+.social a{color:black}
+.cart button {background-color:white;
+              border-style:none;
+}
